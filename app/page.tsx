@@ -59,7 +59,37 @@ export default function PlacementDashboard() {
     router.push("/login");
   };
 
-  
+  const fetchStudents = async () => {
+    if (!companyName.trim()) {
+      alert("Please enter company name");
+      return;
+    }
+
+    setLoading(true);
+    setHashMap({});
+
+    try {
+      const res = await fetch(`/api/sheets?sheetName=${companyName}`);
+      const data = await res.json();
+
+      if (data.error) {
+        alert(data.error);
+        setStudents([]);
+        setLoading(false);
+        return;
+      }
+
+      const list: Student[] = Array.isArray(data) ? data : [];
+      setStudents(list);
+      await prepareHashes(list);
+    } catch (error) {
+      console.error("Fetch error:", error);
+      alert("Failed to fetch students");
+      setStudents([]);
+    }
+
+    setLoading(false);
+  };
 
  
 
