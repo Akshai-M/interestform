@@ -262,7 +262,31 @@ Apply here: ${formLink}`;
             </h3>
           </div>
 
-          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {scEmails.map((emailObj) => (
+              <div
+                key={emailObj.scEmail}
+                className="flex items-center justify-between bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:border-blue-300 transition-colors"
+              >
+                <div className="flex flex-col truncate mr-2">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-tight">
+                    Source
+                  </span>
+                  <span className="text-sm font-bold text-black truncate">
+                    {emailObj.scEmail}
+                  </span>
+                </div>
+                <div className="flex flex-col items-end min-w-fit">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-tight">
+                    Count
+                  </span>
+                  <span className="inline-flex items-center justify-center bg-blue-50 text-blue-700 text-sm font-black px-2.5 py-0.5 rounded-md border border-blue-100">
+                    {emailObj.scCount}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
