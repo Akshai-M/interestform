@@ -119,7 +119,49 @@ export default function PlacementDashboard() {
     setPreparingLinks(false);
   };
 
- 
+  const sendWhatsApp = async (student: Student) => {
+    const hash = hashMap[student.uid];
+
+    if (!hash) {
+      alert("Hash not ready yet. Please wait.");
+      return;
+    }
+
+    try {
+      await fetch("/api/sheets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "updateStatus",
+          sheetName: companyName,
+          uid: student.uid,
+          status: "Sent",
+        }),
+      });
+
+      setStudents((prev) =>
+        prev.map((s) => (s.uid === student.uid ? { ...s, status: "Sent" } : s)),
+      );
+
+      const formLink = `${window.location.origin}/apply/${hash}`;
+
+      const message = `Hi *${student.name || ""}*! 👋
+Sharing an internship opportunity from ${companyName} that can add strong value to your learning and career journey.
+
+Job Details: ${jd}
+
+Apply here: ${formLink}`;
+
+      const whatsappUrl = `[https://wa.me/$](https://wa.me/$){student.phone}?text=${encodeURIComponent(
+        message,
+      )}`;
+
+      window.open(whatsappUrl, "_blank");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send WhatsApp message");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
