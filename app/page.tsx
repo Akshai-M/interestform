@@ -217,6 +217,25 @@ Apply here: ${formLink}`;
               className="w-full border border-gray-300 p-3 rounded-lg mb-4 text-black focus:ring-2 focus:ring-blue-600 outline-hidden"
             />
 
+            <button
+              onClick={fetchStudents}
+              disabled={loading || preparingLinks}
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 disabled:bg-gray-400 transition-colors"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  Loading Students...
+                </>
+              ) : preparingLinks ? (
+                <>
+                  <Loader2 className="animate-spin" size={20} />
+                  Preparing Links...
+                </>
+              ) : (
+                "Load Students"
+              )}
+            </button>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
