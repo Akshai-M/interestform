@@ -314,7 +314,45 @@ Apply here: ${formLink}`;
                     </th>
                   </tr>
                 </thead>
-                
+                <tbody className="divide-y divide-gray-200">
+                  {students.map((student) => (
+                    <tr
+                      key={student.uid}
+                      className="hover:bg-gray-50 even:bg-white odd:bg-gray-100 transition-colors"
+                    >
+                      <td className="px-6 py-4 text-black font-medium">
+                        {student.uid}
+                      </td>
+                      <td className="px-6 py-4 text-black font-medium">
+                        {student.name}
+                      </td>
+                      <td className="px-6 py-4 text-black font-medium">
+                        {student.sc_email}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-bold ${
+                            student.status === "Sent"
+                              ? "bg-green-100 text-green-800"
+                              : "text-gray-800"
+                          }`}
+                        >
+                          {student.status || "Pending"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <button
+                          onClick={() => sendWhatsApp(student)}
+                          disabled={student.status === "Sent" || preparingLinks}
+                          className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-bold transition-colors disabled:bg-gray-300"
+                        >
+                          <Send size={16} />
+                          {student.status === "Sent" ? "Resend" : "Send"}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
               </table>
             ) : (
               <div className="p-20 text-center">
