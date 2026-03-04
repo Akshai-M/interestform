@@ -23,7 +23,10 @@ export default function PlacementDashboard() {
   const router = useRouter();
   const [companyName, setCompanyName] = useState("");
   const [jd, setJd] = useState("");
-  
+  const [students, setStudents] = useState<Student[]>([]);
+  const [hashMap, setHashMap] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [preparingLinks, setPreparingLinks] = useState(false);
 
   const scEmails = useMemo(() => {
     const counts: Record<string, number> = {};
