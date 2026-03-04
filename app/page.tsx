@@ -91,7 +91,33 @@ export default function PlacementDashboard() {
     setLoading(false);
   };
 
- 
+  const prepareHashes = async (list: Student[]) => {
+    setPreparingLinks(true);
+    const map: Record<string, string> = {};
+
+    for (const student of list) {
+      try {
+        const res = await fetch("/api/hash", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            uid: student.uid,
+            company: companyName,
+          }),
+        });
+
+        const data = await res.json();
+        if (data.hash) {
+          map[student.uid] = data.hash;
+        }
+      } catch (err) {
+        console.error("Hash error for", student.uid, err);
+      }
+    }
+
+    setHashMap(map);
+    setPreparingLinks(false);
+  };
 
  
 
